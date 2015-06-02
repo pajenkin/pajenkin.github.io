@@ -113,7 +113,7 @@ gulp.task('browser-sync', ['html', 'styles', 'scripts'], function () {
     notify: false,
     port: 9000,
     server: {
-      baseDir: ['.tmp', paths.app],
+      baseDir: ['talks/karma-jasmine', paths.app],
       routes: {
         '/vendor': 'vendor'
       }

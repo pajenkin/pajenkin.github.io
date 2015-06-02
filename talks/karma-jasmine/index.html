@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js - The HTML Presentation Framework</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="/vendor/normalize-css/normalize.css">
+    <!--<link rel="stylesheet" href="/styles/syntax.css">-->
+    <link rel="stylesheet" href="/vendor/reveal/css/reveal.css">
+    <link rel="stylesheet" href="/vendor/reveal/css/theme/black.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+  <body>
+
+    <div class="reveal">
+    <div class="slides">
+      <section data-markdown>
+        <script type="text/template">
+          ##Karma
+          ###The Peacemaker
+        </script>
+      </section>
+      <section>
+        <section data-markdown>
+          ###Background
+          Gulp and Jasmine were not friends.
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            ###Problems
+            1. Gulp stream structure = not good for html fixtures.
+            2. Vender scripts? Gulp, "Not on my watch!" (No pun intended).
+            3. Jasmine likes javascript. HTML what?
+            4. Gulp is lacking in command-line flags.
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            ###Solution - Form a Meeting
+            1. Karma helps Jasmine out as its test-runner.
+            2. Karma has preprocessors = html -> window string.
+            3. Editable Commandline Yargs'! (pirate for args).
+            </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            ###Benefits - Ideal Fix
+            1. Automate Testing and give more control.
+            2. Run through all the browsers!!!
+            3. Gulp is much faster than Grunt (enough said).
+          </script>
+        </section>
+      </section>
+      <section>
+        <section data-markdown>
+          <script type="text/template">
+            ###Installation
+            ####Get Everybody in the room
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            ####Installation - Get Everybody in the room
+            1. Make sure you have NPM and Node.js installed along with gulp (and your gulpfile tasks with the gulp plugins).
+            2. Install your test-runner in your directory:
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            ###Installation - Get Everybody in the room
+
+            ```
+            npm install karma --save-dev
+            npm install gulp-karma --save-dev
+            npm install gulp-jasmine --save-dev
+            npm install karma-chrome-launcher //optional
+            npm install karma-html2js-preprocessor --save-dev
+            npm install karma-requirejs --save-dev
+            npm install karma-spec-reporter --save-dev //optional
+            npm install yargs --save-dev //optional
+            ```
+          </script>
+        </section>
+      </section>
+      <section>
+        <section data-markdown>
+          <script type="text/template">
+            ###karma.config.js
+            ####The Proposal
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            ###karma.config.js - The Proposal
+
+            1. Order your files in the same way that you will need them on the page. Needed files first (jQuery, JS files).
+            2. Make sure your html file name is correct and do not use a '.' in front of the folder name. Karma does not recognize it.
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            ###karma.config.js - The Proposal
+
+            Create the Module!
+
+            ```
+            var karmaConfig = function(config){
+              return {
+                options: {
+                },
+
+                ...
+
+              };
+            };
+
+            module.exports = karmaConfig;
+            ```
+            </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            ###karma.config.js - Karma's proposed solution
+
+            Export your options and functions!
+
+            This is NOT inherent to karma... yay modules!
+
+            ```
+            var karmaConfig = function(config){
+              return {
+                options: {
+                },
+                #Parse them args!
+                 addKarmaOptions: function(argv){
+                   ...
+                },
+
+                ...
+
+              };
+            };
+
+            module.exports = karmaConfig;
+            ```
+            </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            ###karma.config.js - The Riders
+            1. Order your files in the same way that you will need them on the page. Needed files first (jQuery, JS files).
+            2. Make sure your html file name is correct and do not use a '.' in front of the folder name. Karma does not recognize it.
+          </script>
+        </section>
+      </section>
+      <section>
+        <section data-markdown>
+          <script type="text/template">
+            ###gulpfile.js
+            ####Gulp has to buy in
+            </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            ###gulpfile.js - Can Gulp Participate?
+
+            Gotta require!
+
+            ```
+            ...
+            var karmaOptions = require("./karma.config")();
+            var argv = require("yargs").argv;
+            ...
+            ```
+            </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            ###gulpfile.js - Gulp is usefull!
+
+            What!?!
+            Can't be this easy?
+
+            ```
+            gulp.task("test", "Runs Karma instance with Jasmine", function(){
+              karmaOptions.addKarmaOptions(argv);
+
+              return gulp.src(karmaOptions.options.files)
+                    .pipe(plugins.karma(karmaOptions.options));
+
+            });
+            ```
+            </script>
+        </section>
+      </section>
+      <section>
+        <section data-markdown>
+          <script type="text/template">
+            ###your-spec.js
+            ####Negotiations
+            </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            ###your-spec.js - Negotiations
+            In your spec file is where the magic happens.
+
+            With the html2js preprocessor, you take the modified string
+            from the window object and set it to the html for your tests
+
+            </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            ###your-spec.js - Great Negotiation!
+
+            Noice!
+
+            ```
+            #Run tests normally
+            beforeEach(function() {
+              #object is __html__[];
+              document.body.innerHTML = __html__["demo.html"];
+            });
+
+            ```
+            </script>
+        </section>
+      </section>
+      <section data-markdown>
+        <script type="text/template">
+          ##Run it!
+
+          ```
+          yourname-$ gulp test
+          [15:51:52] Starting 'test'...
+          [15:51:56] Starting Karma server...
+          INFO [karma]: Karma v0.12.33 server started at http://localhost:9876/
+          INFO [launcher]: Starting browser PhantomJS2
+          INFO [PhantomJS 2.0.0 (Mac OS X)]: Connected on socket os7neYWY
+          PhantomJS 2.0.0 (Mac OS X): Executed 53 of 53 SUCCESS
+          [15:51:58] Finished 'test' after 6.8 s
+          ```
+          </script>
+      </section>
+      <section data-markdown>
+        <script type="text/template">
+          ##Notes
+
+          1. PhantomJS 1.x doesn't support prototype.bind() very well. It is supposed to, but is still getting issues from many people.
+          2. Passing in args for karma is somewhat frowned upon, but for small
+              switches like 'run' vs 'watch' it is the best scenerio.
+          3. Full example is found with the leadsy plugin!
+        </script>
+      </section>
+    </div>
+    </div>
+    <script src="/vendor/jquery/dist/jquery.js"></script>
+    <script src="/vendor/reveal/js/reveal.js"></script>
+    <script src="/vendor/reveal/lib/js/head.min.js"></script>
+    <!-- endbuild -->
+    <script type="text/javascript">
+    $(document).ready(function(){
+      Reveal.initialize({
+
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // Hides the address bar on mobile devices
+        hideAddressBar: true,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+
+        // Transition speed
+        transitionSpeed: 'default', // default/fast/slow
+
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Parallax background image
+        parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+        // Parallax background size
+        parallaxBackgroundSize: '', // CSS syntax, e.g. "2100px 900px"
+
+        // Amount to move parallax background (horizontal and vertical) on slide change
+        // Number, e.g. 100
+        parallaxBackgroundHorizontal: '',
+        parallaxBackgroundVertical: '',
+        dependencies: [
+          // Cross-browser shim that fully implements classList - https://github.com/eligrey/classList.js/
+          { src: '/vendor/reveal/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+
+          // Interpret Markdown in <section> elements
+          { src: '/vendor/reveal/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: '/vendor/reveal/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+
+          // Syntax highlight for <code> elements
+          { src: '/vendor/reveal/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+
+          // Zoom in and out with Alt+click
+          { src: '/vendor/reveal/plugin/zoom-js/zoom.js', async: true },
+
+          // Speaker notes
+          { src: '/vendor/reveal/plugin/notes/notes.js', async: true },
+
+          // Remote control your reveal.js presentation using a touch device
+          { src: '/vendor/reveal/plugin/remotes/remotes.js', async: true },
+
+          // MathJax
+          { src: '/vendor/reveal/plugin/math/math.js', async: true }
+        ]
+
+      });
+    });
+
+    </script>
+  </body>
+  <footer>
+
+  </footer>
+<html/>
