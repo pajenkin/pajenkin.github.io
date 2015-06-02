@@ -14,14 +14,14 @@
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
-    <link rel="stylesheet" href="/vendor/normalize-css/normalize.css">
+    <link rel="stylesheet" href="vendor/normalize-css/normalize.css">
     <!--<link rel="stylesheet" href="/styles/syntax.css">-->
-    <link rel="stylesheet" href="/vendor/reveal/css/reveal.css">
-    <link rel="stylesheet" href="/vendor/reveal/css/theme/black.css" id="theme">
+    <link rel="stylesheet" href="vendor/reveal/css/reveal.css">
+    <link rel="stylesheet" href="vendor/reveal/css/theme/black.css" id="theme">
 
 		<!-- Code syntax highlighting -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
-
+		<!-- <link rel="stylesheet" href="lib/css/zenburn.css">
+		 -->
 		<!-- Printing and PDF exports -->
 		<script>
 			var link = document.createElement( 'link' );
@@ -370,26 +370,26 @@
         parallaxBackgroundVertical: '',
         dependencies: [
           // Cross-browser shim that fully implements classList - https://github.com/eligrey/classList.js/
-          { src: '/vendor/reveal/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'vendor/reveal/lib/js/classList.js', condition: function() { return !document.body.classList; } },
 
           // Interpret Markdown in <section> elements
-          { src: '/vendor/reveal/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-          { src: '/vendor/reveal/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'vendor/reveal/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'vendor/reveal/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
 
           // Syntax highlight for <code> elements
-          { src: '/vendor/reveal/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'vendor/reveal/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
 
           // Zoom in and out with Alt+click
-          { src: '/vendor/reveal/plugin/zoom-js/zoom.js', async: true },
+          { src: 'vendor/reveal/plugin/zoom-js/zoom.js', async: true },
 
           // Speaker notes
-          { src: '/vendor/reveal/plugin/notes/notes.js', async: true },
+          { src: 'vendor/reveal/plugin/notes/notes.js', async: true },
 
           // Remote control your reveal.js presentation using a touch device
-          { src: '/vendor/reveal/plugin/remotes/remotes.js', async: true },
+          { src: 'vendor/reveal/plugin/remotes/remotes.js', async: true },
 
           // MathJax
-          { src: '/vendor/reveal/plugin/math/math.js', async: true }
+          { src: 'vendor/reveal/plugin/math/math.js', async: true }
         ]
 
       });
